@@ -31,7 +31,7 @@ public class FreeboardController {
 	//view
 	@RequestMapping(value="freeboardView", method=RequestMethod.GET)
 	public void view(Integer num, Model model){
-		FreeboardDTO freeboardDTO = freeboardService.freeboardView(num);
+		FreeboardDTO freeboardDTO = freeboardService.boardView(num);
 		model.addAttribute("dto", freeboardDTO);
 		System.out.println("뷰");
 		System.out.println(freeboardDTO);

@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.choa.board.BoardDTO;
 import com.choa.freeboard.FreeboardDTO;
@@ -30,11 +31,12 @@ public class FreeboardController {
 	}
 	//view
 	@RequestMapping(value="freeboardView", method=RequestMethod.GET)
-	public void view(Integer num, Model model){
-		FreeboardDTO freeboardDTO = freeboardService.boardView(num);
-		model.addAttribute("dto", freeboardDTO);
+	public void view(Integer num, Model model) throws Exception{
+		BoardDTO boardDTO = new FreeboardDTO();
+		boardDTO = freeboardService.boardView(num);
+		model.addAttribute("dto", boardDTO);
+		model.addAttribute("board", "freeboard");
 		System.out.println("뷰");
-		System.out.println(freeboardDTO);
 	}
 	//writeForm
 	@RequestMapping(value="freeboardWrite", method=RequestMethod.GET)
@@ -45,28 +47,46 @@ public class FreeboardController {
 	}
 	//Write 처리
 	@RequestMapping(value="freeboardWrite", method=RequestMethod.POST)
-	public void write2(FreeboardDTO freeboardDTO){
-		int result = freeboardService.freeboardWrite(freeboardDTO);
-		System.out.println("작성처리");
-		System.out.println(result);
+	public String write(FreeboardDTO freeboardDTO, RedirectAttributes redirectAttributes) throws Exception{
+		int result = freeboardService.boardWrite(freeboardDTO);
+		String message = "FAIL";
+		if(result>0){
+			message="SUCEESS";
+		}
+		
+		redirectAttributes.addFlashAttribute("message", message);
+		return "redirect:freeboardList?curPage=1";
 	}
 	//Update Form
 	@RequestMapping(value="freeboardUpdate", method=RequestMethod.GET)
-	public void update(Model model){
+	public String update(Integer num, Model model) throws Exception{
+		BoardDTO freeboardDTO = new FreeboardDTO();
+		freeboardDTO = freeboardService.boardView(num);
+		model.addAttribute("dto", freeboardDTO);
 		model.addAttribute("path", "Update");
 		System.out.println("업데이트폼");
+		return "freeboard/freeboardWrite";
 	}
 	//Update 처리
 	@RequestMapping(value="freeboardUpdate", method=RequestMethod.POST)
-	public void update2(Integer num){
-		int result = freeboardService.freeboardUpdate(num);
-		System.out.println("업데이트처리");
-		System.out.println(result);
+	public String update(FreeboardDTO boardDTO , RedirectAttributes redirectAttributes) throws Exception{
+		int result = freeboardService.boardUpdate(boardDTO);
+		String message = "FAIL";
+		if(result>0){
+			message = "SUCCESS";
+		}
+		redirectAttributes.addFlashAttribute("message", message);
+		return "redirect:/freeboard/freeboardList?curPage=1";
+		
 	}
 	@RequestMapping(value="freeboardDelete", method=RequestMethod.GET)
-	public void delete(Integer num){
-		int result = freeboardService.freeboardDelete(num);
-		System.out.println("삭제처리");
-		System.out.println(result);
+	public String delete(Integer num, RedirectAttributes redirectAttributes) throws Exception{
+		int result = freeboardService.boardDelete(num);
+		String message = "FAIL";
+		if(result>0){
+			message = "SUCCESS";
+		}
+		redirectAttributes.addFlashAttribute("message", message);
+		return "redirect:/freeboard/freeboardList?curPage=1";
 	}
 }

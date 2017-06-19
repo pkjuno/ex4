@@ -37,6 +37,7 @@ public class NoticeController {
 	public void view(Integer num, Model model) throws Exception{
 		BoardDTO noticeDTO = noticeService.boardView(num);
 		model.addAttribute("dto", noticeDTO);
+		model.addAttribute("board", "notice");
 	}
 	//writeForm
 	@RequestMapping(value="noticeWrite", method=RequestMethod.GET)

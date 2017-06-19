@@ -35,8 +35,6 @@
 			<td>${dto.hit}</td>
 		</tr>
 			</c:forEach>
-		
-		
 	</table>
 </body>
 </html>

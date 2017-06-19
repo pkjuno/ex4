@@ -4,9 +4,12 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
 
+import org.apache.ibatis.session.SqlSession;
+import org.junit.Test;
+
+import com.choa.board.BoardDTO;
 import com.choa.ex4.MyAbstractTest;
 import com.choa.util.PageMaker;
 import com.choa.util.RowMaker;
@@ -14,23 +17,24 @@ import com.choa.util.RowMaker;
 
 
 public class NoticeDAOImplTest extends MyAbstractTest{
-
-	@Autowired
-	private NoticeDAOImpl noticeDAO;
+	
+	@Inject
+	private NoticeDAOImpl dao;
 	
 	@Test
-	public void test() throws Exception {
-		PageMaker pageMaker = new PageMaker(1);	
-		List<NoticeDTO> ar = noticeDAO.noticeList(pageMaker.getRowMaker("", ""));
-		assertEquals(0, ar.size());
+	public void connectionTest() throws Exception{
+		PageMaker pageMaker = new PageMaker(1);
+		RowMaker rowMaker = pageMaker.getRowMaker("", "");
+		List<BoardDTO> ar =  dao.boardList(rowMaker);
+		
+		assertNotEquals(0, ar.size());
+		
 	}
 	
 	@Test
-	public void test2()throws Exception{
-		int result = noticeDAO.noticeDelete(527);
-		assertEquals(1, result);
+	public void countTest() throws Exception {
+		int count = dao.boardCount();
+		assertNotEquals(0, count);
 	}
-	
-
 	
 }

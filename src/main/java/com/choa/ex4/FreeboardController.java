@@ -25,25 +25,26 @@ public class FreeboardController {
 	@RequestMapping(value="freeboardList", method=RequestMethod.GET)
 	public String list(Model model, @RequestParam(defaultValue="1") Integer curPage) throws Exception{
 		List<BoardDTO> ar = freeboardService.boardList(curPage);
+		
 		model.addAttribute("list", ar);
 		model.addAttribute("board", "freeboard");
 		return "Board/BoardList";
 	}
 	//view
 	@RequestMapping(value="freeboardView", method=RequestMethod.GET)
-	public void view(Integer num, Model model) throws Exception{
+	public String view(Integer num, Model model) throws Exception{
 		BoardDTO boardDTO = new FreeboardDTO();
 		boardDTO = freeboardService.boardView(num);
 		model.addAttribute("dto", boardDTO);
 		model.addAttribute("board", "freeboard");
-		System.out.println("뷰");
+		return "Board/BoardView";
 	}
 	//writeForm
 	@RequestMapping(value="freeboardWrite", method=RequestMethod.GET)
-	public void write(Model model){
+	public String write(Model model, RedirectAttributes redirectAttributes ){
 		model.addAttribute("path", "Write");
 		System.out.println("작성폼");
-		
+		return "/Board/BoardWrite";
 	}
 	//Write 처리
 	@RequestMapping(value="freeboardWrite", method=RequestMethod.POST)
@@ -65,18 +66,21 @@ public class FreeboardController {
 		model.addAttribute("dto", freeboardDTO);
 		model.addAttribute("path", "Update");
 		System.out.println("업데이트폼");
-		return "freeboard/freeboardWrite";
+		return "Board/BoardWrite";
 	}
 	//Update 처리
 	@RequestMapping(value="freeboardUpdate", method=RequestMethod.POST)
 	public String update(FreeboardDTO boardDTO , RedirectAttributes redirectAttributes) throws Exception{
 		int result = freeboardService.boardUpdate(boardDTO);
+		
 		String message = "FAIL";
 		if(result>0){
 			message = "SUCCESS";
 		}
+		redirectAttributes.addAttribute("board", "freeboard");
 		redirectAttributes.addFlashAttribute("message", message);
-		return "redirect:/freeboard/freeboardList?curPage=1";
+		
+		return "redirect:/Board/BoardList?curPage=1";
 		
 	}
 	@RequestMapping(value="freeboardDelete", method=RequestMethod.GET)

@@ -3,11 +3,18 @@
 
 <mapper namespace="NoticeMapper"><!--  현재 파일명     -->
 
-	<select id="List" parameterType="com.choa.util.RowMaker" resultType="com.choa.notice.NoticeDTO">
-		select * from 
- 		(select rownum R, N.* from
- 		(select * from notice order by num desc) N)
- 		where R between #{startRow} and #{lastRow}
+	<sql id="search">
+	<trim prefix="where" prefixOverrides="and || or">
+	<if test="search == 'title'"> title like '%' || #{find} || '%'</if>
+	<if test="search == 'writer'"> writer like '%' || #{find} || '%'</if>
+	<if test="search == 'contents'"> contents like '%' || #{find} || '%'</if>
+	</trim>
+	</sql>
+	
+	<select id="List" parameterType="com.choa.util.ListInfo" resultType="com.choa.notice.NoticeDTO">	
+	select * from (select rownum R, N.* from (select * from notice 
+	<include refid="search" />
+	order by num desc) N) where R between #{startRow} and #{lastRow} 
 	</select>
 	
 	<select id="View" resultType="com.choa.notice.NoticeDTO" parameterType="java.lang.Integer">
@@ -26,8 +33,9 @@
 		update notice set title=#{title}, contents=#{contents} where num=#{num}
 	</update>
 	
-	<select id="Count" resultType="java.lang.Integer">
+	<select id="Count" resultType="java.lang.Integer" parameterType="com.choa.util.ListInfo">
 		select nvl(count(num), 0) from notice
+		<include refid="search"/>
 	</select>
 	
 </mapper>

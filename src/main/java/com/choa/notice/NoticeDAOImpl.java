@@ -1,6 +1,7 @@
 package com.choa.notice;
 
 
+
 import java.util.List;
 
 
@@ -10,7 +11,8 @@ import org.springframework.stereotype.Repository;
 
 import com.choa.board.BoardDAO;
 import com.choa.board.BoardDTO;
-import com.choa.util.RowMaker;
+import com.choa.util.ListInfo;
+
 
 
 
@@ -24,8 +26,8 @@ public class NoticeDAOImpl  implements BoardDAO{
 	private static final String NAMESPACE="NoticeMapper.";
 	
 	@Override
-	public List<BoardDTO> boardList(RowMaker rowMaker) throws Exception {
-		return sqlSession.selectList(NAMESPACE+"List", rowMaker);
+	public List<BoardDTO> boardList(ListInfo listInfo) throws Exception {
+		return sqlSession.selectList(NAMESPACE+"List", listInfo);
 	}
 
 	@Override
@@ -49,9 +51,13 @@ public class NoticeDAOImpl  implements BoardDAO{
 		return sqlSession.delete(NAMESPACE+"Delete", num);
 	}
 
+	
+
 	@Override
-	public int boardCount() throws Exception {
-		return sqlSession.selectOne(NAMESPACE+"Count");
+	public int boardCount(ListInfo listInfo) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(NAMESPACE+"Count", listInfo);
+	
 	}
 
 	@Override

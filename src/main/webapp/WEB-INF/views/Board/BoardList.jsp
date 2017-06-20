@@ -6,6 +6,23 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+		var parameter = "&search=${listInfo.search}&find=${listInfo.find}";
+		
+		$(".go").click(function() {
+			
+			document.frm.curPage.value = $(this).attr("id");
+			document.frm.search.value = '${listInfo.search}';
+			document.frm.find.value = '${listInfo.find}';
+			document.frm.submit();
+			/* location.href= "${board}List?curPage="+cur+parameter; */
+		});
+		
+
+	});
+</script>
 </head>
 <body>
 	<!-- List 제목  -->
@@ -15,8 +32,9 @@
 	<a href="${board}Write">write</a>
 	<hr>
 	
-	<div>
-		<form action="${board}List">
+	<div> 
+		<form action="${board}List" name="frm">
+			<input type="hidden" name="curPage">
 			<select name="search">
 				<option value="title">title</option>
 				<option value="writer">writer</option>
@@ -48,5 +66,22 @@
 		</tr>
 			</c:forEach>
 	</table>
+	
+	<c:if test="${listInfo.curBlock > 1}">
+		<span class="go" id="${listInfo.startNum-1}">[이전]</span>
+	</c:if>
+	<c:forEach begin="${listInfo.startNum}" end="${listInfo.lastNum}" var="i">
+		<span class="go" id="${i}">${i}</span>
+	</c:forEach>
+	
+	<c:if test="${listInfo.curBlock < listInfo.totalBlock }">
+		<span class="go" id="${listInfo.lastNum+1}">[다음]</span>
+	</c:if>
+	
+	<div>
+		<p>curPage  = ${listInfo.curPage}</p>
+		<p>search = ${listInfo.search}</p>
+		<p>find = ${listInfo.find}</p>
+	</div>
 </body>
 </html>

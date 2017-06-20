@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.choa.board.BoardDTO;
 import com.choa.notice.NoticeDTO;
 import com.choa.notice.NoticeServiceImpl;
+import com.choa.util.ListInfo;
 
 @Controller
 @RequestMapping(value="/notice/**")
@@ -26,10 +27,12 @@ public class NoticeController {
 	
 	//list
 	@RequestMapping(value="noticeList", method=RequestMethod.GET)
-	public String list(Model model, @RequestParam(defaultValue="1") Integer curPage) throws Exception{
-		List<BoardDTO> ar = noticeService.boardList(curPage);
-		model.addAttribute("board", "notice");
+	public String list(Model model, ListInfo listInfo) throws Exception{
+		List<BoardDTO> ar = noticeService.boardList(listInfo);
+		
 		model.addAttribute("list", ar);
+		model.addAttribute("listInfo", listInfo);
+		model.addAttribute("board", "notice");
 		return "Board/BoardList";
 	}
 	//view

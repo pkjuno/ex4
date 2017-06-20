@@ -23,11 +23,9 @@ public class PageMaker {
 		makePage.makePage(totalCount, curPage, perPage, perBlock);
 		return makePage;
 	}
-	public RowMaker getRowMaker(String kind, String search) {
+	public RowMaker getRowMaker() {
 		RowMaker rowMaker = new RowMaker();
 		rowMaker.setRow(curPage, perPage);
-		rowMaker.setKind(kind);
-		rowMaker.setSearch(search);
 		return rowMaker;
 	}
 	

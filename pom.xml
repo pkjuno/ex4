@@ -23,7 +23,7 @@
 	
 	<dependencies>
 
-	<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis-spring -->
+	<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis-spring     mybatis-Spring   -->
 	<dependency>
 		<groupId>org.mybatis</groupId>
 		<artifactId>mybatis-spring</artifactId>
@@ -33,7 +33,7 @@
 
 
 
-	<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
+	<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis    Mybaits -->
 	<dependency>
 		<groupId>org.mybatis</groupId>
 		<artifactId>mybatis</artifactId>
@@ -42,7 +42,7 @@
 
 
 
-	<!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
+	<!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc     Spring-jdbc  -->
 	<dependency>
 		<groupId>org.springframework</groupId>
 		<artifactId>spring-jdbc</artifactId>

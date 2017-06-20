@@ -15,6 +15,18 @@
 	<a href="${board}Write">write</a>
 	<hr>
 	
+	<div>
+		<form action="${board}List">
+			<select name="search">
+				<option value="title">title</option>
+				<option value="writer">writer</option>
+				<option value="contents">contents</option>
+			</select>
+			<input type="text" name="find" >
+			<input type="submit" value="검색">  
+		</form>
+	</div>
+	
 	<table>
 		<tr>
 			<td>NUM</td>

@@ -29,5 +29,5 @@
 	<select id="Count">
 		select nvl(count(num), 0) from freeboard
 	</select>
-
+	
 </mapper>

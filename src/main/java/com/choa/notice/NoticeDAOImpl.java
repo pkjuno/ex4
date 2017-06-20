@@ -1,13 +1,8 @@
 package com.choa.notice;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
+
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.sql.DataSource;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import com.choa.board.BoardDAO;
 import com.choa.board.BoardDTO;
-import com.choa.util.DBConnect;
 import com.choa.util.RowMaker;
 
 
@@ -37,7 +31,6 @@ public class NoticeDAOImpl  implements BoardDAO{
 	@Override
 	public BoardDTO boardView(int num) throws Exception {
 		BoardDTO boardDTO = sqlSession.selectOne(NAMESPACE+"View", num);
-		
 		return boardDTO;
 	}
 
@@ -65,7 +58,4 @@ public class NoticeDAOImpl  implements BoardDAO{
 	public int boardHit(int num) throws Exception {
 		return 0;
 	}
-
-
-	
 }
